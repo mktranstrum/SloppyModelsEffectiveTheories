@@ -204,6 +204,14 @@
     top: 625px;
 }
 
+.link {
+    text-align: left;    
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    top: 600px;
+}
+
 .byulogo {
     position: absolute;
     top: 0px;
