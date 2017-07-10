@@ -1,0 +1,1103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Effective Theories</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+	<section>
+	  <section>
+	    <h3 class="title">Sloppy Models and <br />Effective Theories in <br />Physics, Biology,
+	      <br />and Beyond</h2>
+	    <h4 class="name">Mark K. Transtrum</h4>
+	    <h4 class="date">July 10, 2017</h4>
+	    <h4 class="venue">SIAM Workshop on Parameter Space Dimension Reduction</h4>
+	    <div class="byulogo">
+	      <!-- <img src="media/byu-medallion1.jpg" alt="" /> -->
+	    </div>
+	    <div class="titlenlls">
+	      <img src="media/nllsdata.png" alt="" />
+	    </div>
+	    <div class="titlehierarchy">
+	      <img src="media/hierarchy.png" alt="" />
+	    </div>
+	    <div class="titlemodelmanifold">
+	      <img src="media/modelmanifold.png" alt="" />
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Outline</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>Motivation</li>
+		<ul>
+		  <li>Data Fitting</li>
+		  <li>Philosphy of Modeling in Science</li>
+		</ul>
+		<li>Mathematical Framework</li>
+		<ul>
+		  <li>Fisher Information Matrix</li>
+		  <li>Sloppy Models</li>
+		  <li>Information Geometry</li>
+		</ul>
+		<li>Low effective parameter dimensionality in models of complex processes.</li>
+		<li>Parameter Reduction: MBAM</li>
+		<li>Information Topology: A meta-theory of modeling</li>
+	      </ul>
+	    </div>	    
+	  </section>
+	</section>
+
+
+	<section>
+	  <section>
+	    <h1 class="sectiontitle">Motivation: Modeling in Science</h1>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Modeling in Science</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li class="fragment" data-fragment-index="1">Wigner: Mathematics [modeling] has been unreasonably successful at explaining physical phenomena</li>
+		<!-- <ul> -->
+		<!--   <li>Often complex phenomena are modeled by very simple theories</li> -->
+		<!--   <li>"Spherical Cow"</li> -->
+		<!-- </ul> -->
+		<br />
+		<li class="fragment" data-fragment-index="2">Anderson: More is Different</li>
+		<ul class="fragment" data-fragment-index="2">
+		  <li>Reductionism vs. Constructionism</li>
+		  <li>Simple theories are organized hierarchically</li>
+		  <li>Very different systems can be described by the same theory</li>
+		  <li>Equivalence classes of physical systems described by thee same model (Universality)</li>
+		</ul>
+		<br />
+		<li class="fragment" data-fragment-index="3">Goldenfeld & Kadanoff: Don't model bulldozers with quarks.</li>
+		<ul class="fragment" data-fragment-index="3">
+		  <li>Use the right level of description to catch the phenomena of interest.</li>		  
+		</ul>
+		<br />
+		<li class="fragment" data-fragment-index="4">David Pines: Protectorates</li>
+		<ul class="fragment" data-fragment-index="4">
+		  <li>A collective behavior whose "properties are determined by higher organizing principles and nothing else"</li>		  
+		</ul>
+	      </ul>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Modeling in Science</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>Mathematical Models are ubiquitous</li>
+		<ul>
+		  <li>Materials</li>
+		  <li>Biology</li>
+		  <li>Economics</li>
+		  <li>Climate</li>
+		  <li>Engineering</li>
+		  <li>Machine Learning</li>
+		  <li>Many others...</li>
+		</ul>
+		<br />
+		<li>Computers enable <u>BIG</u> models</li>
+		<ul>
+		  <li>Models of power systems can have 100's of thousands of parameters (does not necessarily lead to improved predictivity)</li>
+		</ul>
+		<br />
+		<li>How does modeling "work"?</li>
+	      </ul>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Hierarchy of Scientific Theories</h3>
+	    <div class="leftpane">
+	      <p>Many practical questions:</p>
+	      <ul>
+	      	<li>Numerical Methods</li>
+	      	<li>Parameter estimation</li>
+	      	<li>Experimental design</li>
+	      	<li>Large scale models deman new computational and theoretical tools</li>
+	      </ul>
+
+	      <p>More broadly, how do we organize our knowledge about the world? And why?</p>
+	      <ul>
+		<li>Reductionism</li>
+		<li>Emergence</li>
+	      </ul>
+	    </div>
+
+	    <div class="hierarchy">
+	      <img src="media/hierarchy.png" alt="" />
+	    </div>
+	  </section>
+	  
+
+	  <section>
+	    <h4 class="slidetitle">Two Cultures of Mathematical Modeling</h4>
+	    <div class="mainpane">
+	      <p>
+		Nearly every branch of science is divided into two camps based on their approach to mathematical modeling.
+	      </p>
+	      <ol>
+		<li>Top-Down Modeling</li>
+		<ul>
+		  <li>Data-driven</li>
+		  <li>Phenomenological</li>
+		  <li>Identifiable parameters</li>
+		  <li>Empircal Correlation (Machine learning is the extreme of this)</li>
+		</ul>
+		<br />
+		<li>Bottom-Up Modeling</li>
+		<ul>
+		  <li>"Parts lists"</li>
+		  <li>Mechanistic</li>
+		  <li>Many unidentifiable parameters</li>
+		  <li>Summarizes causal relationships among model components</li>
+		  
+		</ul>
+	      </ol>
+	      <p>
+		Different approaches driven by different philosophies and goals.
+	      </p>
+	      
+	    </div>
+	  </section>
+	</section>
+
+	<section>
+	  
+	  <section>
+	    <h1 class="sectiontitle">Mathematical Framework</h1>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Nonlinear Data Fitting (NLLS)</h3>
+	    <div class="nllsdata">
+	      <img src="media/nllsdata.png" alt="" />
+	    </div>
+	    <div class="nllsmath">
+	      <p>
+	      \begin{align}
+	      y(t,\theta) & = e^{-\theta_1 t} + e^{-\theta_2 t} \\
+	      C(\theta) & = \frac{1}{2} \sum_m \left( \frac{d_m - y(t_m, \theta)}{\sigma_m}\right)^2 \\
+	      & = \frac{1}{2} \sum_m r_m^2
+	      \end{align}
+	      </p>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Cost Surface</h3>
+	    <div class="costsurfaceimg">
+	      <img src="media/costsurface.png" alt="" />
+	    </div>
+	    <div class="costsurfaceleft">
+	      <p>
+		Which parameter values are consistent with the data?
+	      <p>
+	    </div>
+	    <div class="costsurfacebottom">
+	      <ul>
+		<li>Asymptotic Inference</li>
+		<li>Quadratic Approximation at the best fit</li>
+		<li>Hessian Matrix (Fisher Information Matrix)</li>
+	      </ul>
+	      <p>
+		\(H_{\mu\nu} = \partial_\mu \partial_\nu C \)
+		<br />
+		\(H_{\mu\nu}  = \sum_m \partial_\mu r_m \partial_\nu r_m + \sum_m r_m \partial_\mu \partial_\nu r_m \)
+		<br />
+		\(H_{\mu\nu} \approx I_{\mu\nu} = (J^TJ)_{\mu\nu} \)
+		<br /><br />
+		\(I_{\mu\nu}\) is intrinsic to the model, independent of the data!
+	      </p>
+	    </div>
+	    <div class="costsurfacebottomright">
+	      <p>
+		\(\partial_\mu \equiv \frac{\partial}{\partial \theta_\mu}\)
+		<br /><br />
+		\(J_{m\mu} = \partial_\mu r_m \)
+	      </p>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">General Mathematical Formalism</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>Not all models are fit using least squares</li>
+		<ul>
+		  <li>Statistical Mechanics models, for example</li>
+		  <li>Ising Model: <br />
+		    \begin{align}
+		    & \mathcal{H} = -J \sum_{\langle i, j\rangle} s_i s_j + h \sum_i s_i \\
+		    & P({s}) \propto e^{-\mathcal{H}}
+		    \end{align}
+</li>
+		</ul>
+		<li>In general:</li>
+		<ul>
+		  <li>Model: Parameterized probability distribution:
+		    <br />
+		    \(P(x\vert \theta) \)</li>
+		  <li>Data: Sequence of observations:
+		    <br />
+		    \(x_1, x_2, \dots\)</li>
+		</ul>
+		<li>Which parameter values were mostly likely to have generated the sequence of observations?</li>
+	      </ul>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h4 class="slidetitle">Maximum Likelihood Estimation, Fisher Information</h4>
+	    <div class="mainpane">
+	      <ul>
+		<li>log- Likelihood function:
+		  <br />
+		  \begin{align}
+		  l(\theta) & = \log P(x_1 \vert \theta) + \log P(x_2 \vert \theta) \dots
+		  \end{align}
+		</li>
+		<li>Maximum Likelihood Estimation (MLE)</li>
+		<ul>
+		  <li>Maximize \(l(\theta)\) (i.e., best fit)</li>
+		  <li>Least squares cost is the negative log likelihood for additive Gaussian noise</li>
+		</ul>
+		<li>Find parameters consistent with the data
+		    <br />
+		    \begin{align}
+		    H_{\mu\nu} = - \partial_\mu \partial_\nu l
+		    \end{align}
+		</li>
+		<li>Asymptotic Inference (approximate Hessian)</li>
+		<ul>
+		  <li>Limit of maximally informative data: average over all possible observations</li>
+		</ul>
+		\begin{align}
+		I_{\mu\nu} = - \langle \partial_\mu \partial_\nu l \rangle
+		\end{align}
+		<li>Fisher Information Matrix (FIM)</li>
+		<ul>
+		  <li>A matrix, intrinsic to the model that quantifies how much the model behavior changes in response to changes in parameter values.</li>
+		</ul>
+	      </ul>
+	    </div>
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h1 class="sectiontitle">Fisher Information and Effective Theories</h1>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Example: Microscopic Diffusion</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>Particles "hopping" on a lattice</li>
+		<li>Parameters: probability of hopping a given number of sites away</li>
+		<li>Initial density: All particles at the origin</li>
+		<li>Data: Observed density after several steps</li>
+		<li>Goal: Infer the parameters from observations of density at later times</li>
+	      </ul>
+	    </div>
+	    <div class="diffusionlattice">
+	      <img src="media/diffusionlattice.png" alt="" />
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Example: Microscopic Diffusion</h3>
+	    <div class="rightpane">
+	      <ul>
+		<li>Short time scales, parameter inference is easy</li>
+		<li>More difficult after observations are coarsened</li>
+		<li>Only a few parameter combinations need to be carefully tuned to explain data</li>
+		<li>Most parameter combinations are irrelevant.</li>
+		<li>Small parameter: Ratio of scales</li>
+	      </ul>
+	    </div>
+	    <div class="diffusioneigs">
+	      <img src="media/diffusioneigs.png" alt="" />
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		Machta, Benjamin B., et al. "Parameter space compression underlies emergent theories and predictive models." <i>Science</i> <b>342</b>.6158 (2013): 604-607.
+	      </p>
+	    </div>
+	  </section>
+	  
+	  <section>
+	    <h3 class="slidetitle">Diffusion: Microscopic to Macroscopic</h3>
+	    <div class="mainpane">
+	      <ul>
+		<br />
+		<li>Continuum limit: Gradient expansion</li>
+		<ul>
+		  <li>Formally justified by the small parameter (ratio of scales)</li>
+		</ul>
+		\begin{align}
+		\frac{\partial \rho}{\partial t} = R \ \rho + \mathbf{v} \cdot \nabla \rho + D \nabla^2 \rho + \dots
+		\end{align}
+		<li>In most cases, first two terms are zero because of symmetry:</li>
+		\begin{align}
+		\frac{\partial \rho}{\partial t} = D \nabla^2 \rho
+		\end{align}
+		<li>Fisher Information justifies the use of a simple theory</li>
+		<li>Intuitively, are these models equivalent?</li>
+		<ul>
+		  <li>One model has many parameters</li>
+		  <li>The other model has only one parameter</li>
+		  <li>How can a low-dimensional object approximate a higher-dimensional object?</li>
+		</ul>
+	      </ul>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Example: Critical Phenomenon</h3>
+	    <div class="rightpane">
+	      <p>
+		Ising Model: \( \mathcal{H} = -\sum_\mu \sum_{d_(i,j) = \mu} \theta_\mu s_i s_j \)
+		<br /><br />
+		Small parameter: (inverse system size)
+		<br />
+		Ising universality class:
+	      </p>
+	      <ul>
+		<li>Magnets</li>
+		<li>Liquid-Gas</li>
+		<li>Biological Membranes</li>
+	      </ul>
+	    </div>
+	    <div class="isingeigs">
+	      <img src="media/isingeigs.png" alt="" />
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		Machta, Benjamin B., et al. "Parameter space compression underlies emergent theories and predictive models." <i>Science</i> <b>342</b>.6158 (2013): 604-607.
+	      </p>
+	    </div>
+
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Example: Slow Manifolds</h3>	  
+	    <div class="mainpane">
+	      <p>
+		Van der pol oscillator:
+		\begin{align}
+		\mu^{-2} \dot{x} & = x  - \frac{x^3}{3} - y + \sum_{m,n} a_{m,n} \left( x - \frac{x^3}{3} - y \right)^m x^n \\
+		\dot{y} & = x 
+		\end{align}
+	      </p>
+	    </div>
+	    <div class="vanderpoltext">
+	      <p>
+		Small parameter: Ratio of time scales
+	      </p>
+	    </div>
+	    <div class="vanderpolimg">
+	      <img src="media/vanderpol.png" alt="" />
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		Chachra, Ricky, Mark K. Transtrum, and James P. Sethna. "Structural susceptibility and separation of time scales in the van der Pol oscillator." <i>Physical Review E</i> <b>86</b>.2 (2012): 026712.
+	      </p>
+	    </div>
+
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Example: Systems Biology</h3>	  
+	    <div class="egfrnetwork">
+	      <img src="media/egfrnetwork.png" alt="" />
+	    </div>
+	    <div class="egfreigs">
+	      <img src="media/egfreigs.png" alt="" />
+	    </div>
+	    <div class="egfrequations">
+	      <img src="media/egfrequations.png" alt="" />
+	    </div>
+	    <div class="egfrtext">
+	      <p>
+		29 Coupled ODEs
+		<br />
+		48 Parameters
+	      </p>
+	    </div>
+	    <div class="egfrtextbottom">
+	      <p>
+		No obvious small parameter? Simple theory?		
+	      </p>
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		Brown, Kevin S., et al. "The statistical mechanics of complex signaling networks: nerve growth factor signaling." <i>Physical biology</i> <b>1</b>.3 (2004): 184.
+	      </p>
+	    </div>
+
+	  </section>
+
+	  <section>
+	    <div class="alleigsdiffusion">
+	      <img src="media/diffusioneigs.png" alt="" />
+	    </div>
+	    <div class="alleigsising">
+	      <img src="media/isingeigs.png" alt="" />
+	    </div>
+	    <div class="alleigsvanderpol">
+	      <img src="media/vanderpol.png" alt="" />
+	    </div>
+	    <div class="alleigsegfr">
+	      <img src="media/egfreigs.png" alt="" />
+	    </div>
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h1 class="sectiontitle">
+	      Sloppy Models
+	    </h1>
+	  </section>
+	  <section>
+	    <h3 class="slidetitle">Sloppy Models</h3>	  
+	    <div class="sloppyeigs">
+	      <img src="media/sloppyeigs.png" alt="" />
+	    </div>
+	    <div class="rightpane">
+	      <ul>
+		<br />
+		<li>Exponential Distribution of FIM eigenvalues</li>
+		<li>Parameter inference is hard</li>
+		<li>Lots of equivalent microscopic models</li>
+		<li>Emergent "theory" hidden inside the complexity</li>
+		<li>Low effective dimensionality</li>
+
+	      </ul>
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		Machta, Benjamin B., et al. "Parameter space compression underlies emergent theories and predictive models." <i>Science</i> <b>342</b>.6158 (2013): 604-607.
+	      </p>
+	    </div>
+	    
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Sloppiness and Fisher Information</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>FIM eigenvalues suggest a low effective dimensionality</li>
+		<ul>
+		  <li>Can we make this idea rigorous?</li>		  
+		</ul>
+		<li>What happens if we reparameterize the model?</li>
+		<ul>
+		  <li>Change units?</li>
+		  <li>Rates vs. time constants?</li>
+		  <li>Other combinations of parameters</li>
+		</ul>
+		<li>FIM eigenvalues can be transformed into any positive values by reparameterizing the model.</li>
+		<li>Is there a more intrinsic measure of sloppiness?</li>
+		<li>Answer: Information Geometry</li>
+	      </ul>
+	    </div>
+	  </section>
+	</section>
+	
+	<section>
+	  <section>
+	    <h1 class="sectiontitle">Information Geometry</h1>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">The Model Manifold</h3>
+	    <div class = "modelmanifoldupperleft">
+	      <ul>
+		<li><i><b>Model Manifold</b></i>: Mapping from parameters to data</li>
+		<li>All possible model predictions embed a manifold in the space of data with <i><b>parameters as coordinates.</b></i></li>
+		<li>Riemannian Metric (induced from data space) = Fisher Information Matrix</li>
+		<li>Sloppy models are <i><b>bounded manifolds</b></i></li>
+	      </ul>
+	    </div>
+	    <div class="modelmanifolddata">
+	      <img src="media/nllsdata.png" alt="" />
+	    </div>
+	    <div class="modelmanifoldequation">
+	      <p>
+		$$ y(t, \theta) = e^{-\theta_1 t} + e^{-\theta_2 t} $$
+	      </p>
+	    </div>
+	    <div class="modelmanifold">
+	      <img src="media/modelmanifold.png" alt="" />
+	    </div>
+	  </section>
+	    <div class="footerpane">
+	      <p>
+		Transtrum, Mark K., Benjamin B. Machta, and James P. Sethna. "Why are nonlinear fits to data so challenging?." <i>Physical review letters</i> <b>104</b>.6 (2010): 060201.
+	      </p>
+	    </div>
+
+	</section>
+
+	<section>
+	  <section>
+	    <h1 class="sectiontitle">Gallery of Model Manifolds</h1>
+	  </section>
+	  
+	  <section>
+	    <h3 class="slidetitle">Two Exponentials</h3>
+	    <div class="twoexpeq">
+	      <p>
+		\( y(t, \theta) = e^{-\theta_1 t} + e^{-\theta_2 t} \)
+		<br />
+		2 Parameters
+		<br />
+		3 Observations
+	      </p>
+	    </div>
+	    <div class="twoexpdata">
+	      <img src="media/nllsdata.png" alt="" />
+	    </div>
+	    <div class="twoexpmanifold">
+	      <img src="media/twoexpmanifold.png" alt="" />
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Three Exponentials</h3>
+	    <div class="threeexpeq">
+	      <p>
+		\( y(t, \theta) = e^{-\theta_1 t} + e^{-\theta_2 t} + e^{-\theta_3 t} \)
+		<br />
+		3 Parameters
+		<br />
+		5 Observations
+	      </p>
+	    </div>
+	    <div class="threeexpmanifold">
+	      <img src="media/threeexpmanifold.png" alt="" />
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Enzyme Catalyzed Reaction</h3>
+	    <div class="ecreq">
+	      <p>
+		\( y(x, \theta) = \frac{\theta_1 (x^2 + \theta_2 x)}{(x^2 + \theta_3 x + \theta_4)} \)
+		<br />
+		4 (2) Parameters
+		<br />
+		11 Observations
+	      </p>
+	    </div>
+	    <div class="ecrmanifold">
+	      <img src="media/ecrmanifold.png" alt="" />
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Chebyshev Quadrature</h3>
+	    <div class="chqeq">
+	      <p>
+		\( y_i = \frac{1}{M} \sum_j T_i(\theta_j) \)
+		<br />
+		3 Parameters
+		<br />
+		5 Observations
+	      </p>
+	    </div>
+	    <div class="chqmanifold">
+	      <img src="media/chqmanifold.png" alt="" />
+	    </div>
+
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Isomerization of \(\alpha\)-pinene</h3>
+	    <div class="iadeq">
+	      <p>
+		\begin{align}
+		\dot{y}_1 &= -(\theta_1 + \theta_2) y_1 \\
+		\dot{y}_2 &= \theta_1 y_1  \\
+		\dot{y}_3 &= \theta_2 y_1 - (\theta_3 + \theta_4) y_3 + \theta_5 y_5  \\
+		\dot{y}_4 &= \theta_3 y_3  \\
+		\dot{y}_5 &= \theta_4 y_3 - \theta_5 y_5  \\
+		\end{align}
+		5 Parameters
+		<br />
+		40 Observations
+	      </p>
+	    </div>
+	    <div class="iadmanifold">
+	      <img src="media/iadmanifold.png" alt="" />
+	    </div>
+
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Ising Model</h3>
+	    <div class="isingeq">
+	      <p>
+		\( \mathcal{H} = -J_1 \sum_i s_i s_{i+1} - J_2 \sum_i s_i s_{i+2} \)
+		<br />
+		\( P({s}) \propto e^{-\mathcal{H}} \)
+		<br />
+		2 Parameters
+		<br />
+		16 Observations (4 spins)
+		
+	      </p>
+	    </div>
+	    <div class="isingmanifold">
+	      <img src="media/isingmanifold.png" alt="" />
+	    </div>
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h1 class="sectiontitle">Low Effective Dimensionality</h1>
+	  </section>
+	  <section>
+	    <h3 class="slidetitle">Manifold Widths</h3>
+	    <div class="leftpane">
+	      <ul>
+		<li>"Measure" the manifold with geodesics.</li>
+		<li>Widths are exponentially narrow: <b><i>Hyper-ribbon</i></b></li>
+		<li>Interpolation</li>
+		<li>Parameterization independent measure of sloppiness</li>
+		<li>Widths are approximated by the FIM eigenvalues</li>
+		<li>Intrinsic measure of the effective dimensionality of the model</li>
+	      </ul>
+	    </div>
+	    <div class="manifoldwidths">
+	      <img src="media/manifoldwidths.png" alt="" />
+	    </div>
+	    <div class="interpolation">
+	      <img src="media/interpolation.png" alt="" />
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		Transtrum, Mark K., et al. "Perspective: Sloppiness and emergent theories in physics, biology, and beyond." <i>The Journal of chemical physics</i> <b>143</b>.1 (2015): 07B201_1.
+	      </p>
+	    </div>
+	  </section>
+	  
+	  <section>
+	    <h3 class="slidetitle">Diffusion Revisited</h3>
+	    <div class="mainpane">
+	      <p>
+		As observations are coarsened, the high-dimensional manifold is systematically compressed into something of lower effective dimensionality.
+	      </p>
+	    </div>
+	    <div class="diffusionmanifold">
+	      <img src="media/diffusionmanifold.png" alt="" />
+	    </div>
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h1 class="sectiontitle">Parameter Reduction</h1>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Manifold Boundary Approximation Method (MBAM)</h3>
+	    <div class="leftpane">
+	      <ul>
+		<br />
+		<li>Can we remove sloppy parameters?</li>
+		<li>Find the emergent theory hidden in the model?</li>
+		<li>Geodesics along sloppines direction to nearby boundary.</li>
+		<li>Eigendirections simplify at the boundary to physically reasonable models</li>
+		<li>Reparameterize model such that one parameter goes to zero at boundary (identifying the small parameter)</li>
+	      </ul>
+	    </div>
+	    <div class="mbam">
+	      <img src="media/mbam.png" alt="" />
+	    </div>
+	    <div class="mbamvelocity">
+	      <img src="media/mbamvelocity.png" alt="" />
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		<br />
+		Transtrum, Mark K., and Peng Qiu. "Model reduction by manifold boundaries." <i>Physical review letters</i> <b>113</b>.9 (2014): 098701.
+	      </p>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">MBAM Example</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>A Michaelis-Menten reaction \( \dot{[P]} = \frac{k [E] [S]}{ K + [S]} \) with parameters \(k\) and \(K\). 
+		<li>The geodesic reveals that at the boundary both \(k\) and \(K\) become infinite but that the ratio \(k/K\) remains finite.</li>
+		<li>Reparameterize: \(\tilde{k} = k/K\), \( \epsilon = 1/K \)</li>
+		So that
+		\begin{align}
+		\dot{[P]} & = \frac{k [E] [S]}{ K + [S]} = \frac{k}{K} \frac{[E][S]}{1 + [S]/ K} \\
+		
+		& = \frac{ \tilde{k} [E] [S]}{1 + \epsilon [S]}
+		\end{align}
+		<li>Taking the limit \(\epsilon \rightarrow 0\) gives the boundary model: \( \dot{[P]} = \tilde{k} [E] [S] \) </li>
+		<li>But can it be done for nontrivial cases?</li>
+
+	      </ul>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">EGFR Signaling Model</h3>
+	    <div class="egfrnetwork">
+	      <img src="media/egfrnetwork.png" alt="" />
+	    </div>
+	    <div class="egfreigs">
+	      <img src="media/egfreigs.png" alt="" />
+	    </div>
+	    <div class="egfrequations">
+	      <img src="media/egfrequations.png" alt="" />
+	    </div>
+	    <div class="egfrtext">
+	      <p>
+		29 Coupled ODEs
+		<br />
+		48 Parameters
+	      </p>
+	    </div>
+
+	  </section>
+
+	  <section>
+	    <h4 class="slidetitle">Reduced EGFR Signaling Model</h4>
+	    <div class="egfrnetwork">
+	      <img src="media/redegfrnetwork.png" alt="" />
+	    </div>
+	    <div class="egfreigs">
+	      <img src="media/redegfreigs.png" alt="" />
+	    </div>
+	    <div class="egfrequations">
+	      <img src="media/redegfrequations.png" alt="" />
+	    </div>
+	    <div class="egfrtext">
+	      <p>
+		6 Coupled ODEs
+		<br />
+		12 Parameters
+	      </p>
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		Transtrum, Mark K., and Peng Qiu. "Model reduction by manifold boundaries." <i>Physical review letters</i> <b>113</b>.9 (2014): 098701.
+	      </p>
+	    </div>
+
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Interpreting the Reduced Model</h3>
+	    <div class="mainpane">
+	      <ul>
+	    	<li>Effective "Renormalized" Parameters:</li>
+	    	$$ \phi_9 = \frac{ [\textrm{BRafI}](\textrm{kRap1ToBRaf})(\textrm{KmdBRaf})(\textrm{kpBRaf})(\textrm{KmdMek})}{[\textrm{PP2AA}][\textrm{Raf1PPtase}](\textrm{kdBRaf})(\textrm{KmRap1ToBRaf})(\textrm{kdMek})} $$
+	    	<ul>
+	    	  <li>Interpretation: Rate of Information Flow through channel</li>
+	    	  <li>Emergent Control Knob</li>
+	    	  <li>No Black Box</li>
+	    	  <li>Bridges the mechanistic and phenomenological descriptions</li>
+	    	</ul>
+	    	<li>Dynamical Variables</li>
+	    	<ul>
+	    	  <li>Biologically Functional Modules</li>
+	    	</ul>
+	    	<li>Proteins \(\rightarrow\) Signaling</li>
+	    	<li>Chemistry \( \rightarrow\) Biology</li>
+	    	<li>Not specific to systems biology</li>
+	      </ul>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Limitations of MBAM</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>MBAM makes no explicit assumptions about the functional form of the model</li>
+		<li>Requires a model manifold with <b><i>hierarchical boundary complex</i></b>.</li>
+		<ul>
+		  <li>Not a geometric property (i.e., independent of FIM)</li>
+		  <li>Differential Topology</li>		    
+		</ul>
+		<li>Does not work for models without bounded cross sections</li>
+		<ul>
+		  <li>Example: Linear least squares
+		    <ul>
+		      <li>Hyper-plane have no natural low dimensional structure</li>
+		      <li>Possible extensions/adaptations to these cases</li>
+		    </ul>
+		  <li>In many cases, an "unbounded" manifold indicates the model physically unrealistic (breaking conservation laws, for example)</li>
+		</ul>
+	      </ul>
+	    </div>
+	  </section>
+	  
+	  <section>
+	    <h3 class="slidetitle">Where is it known to work?</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>Chemical/Biochemical kinetics (Conservation of mass)</li>
+		<li>Compartment models (Conservation of mass)</li>
+		<li>Power Systems Transients (Singular Perturbation)</li>
+		<li>Stable Linear Time Invariant Systems (Balanced Truncation/Singular Perturbation)</li>
+		<li>Composition of elementary functions (exponential, rational polynomials, etc.)</li>
+		<li>Bayesian Networks/Makov Chains/Markov Random Fields (Conservation of Probability)</li>
+		<li>Molecular Dynamics (Conservation of Energy)</li>
+		<li>Multilayer Perceptrons, i.e., Neural Networks</li>
+		<li>General Exponential Families (e.g., Ising Models)</li>
+		<li>Models with discrete symmetries (Orbifolds)</li>
+		<li>Hodgkin-Huxley Neurons</li>
+	      </ul>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Relation to other reduction methods</h3>
+	    <div class="mainpane">
+	      <p>
+		<br />
+		For an appropriately parameterized model, MBAM is equivalent to several other model reduction methods:
+		<ul>
+		  <li>Real-space/Momentum-space Renormalization Group</li>
+		  <li>Mean-field Approximations</li>
+		  <li>Singular Perturations</li>
+		  <li>Balanced Truncation</li>
+		  <li>Steady-state/Equilibrium Approximations</li>
+		  <li>Thermodynamic/Continuum/Classical limits</li>
+
+		</ul>
+	      </p>
+	    </div>
+	  </section>
+	  
+	</section>
+	
+	<section>
+	  <section>
+	    <h1 class="sectiontitle">A meta-theory of modeling</h1>
+	  </section>
+	  
+	  
+	  <section>
+	    <h3 class="slidetitle">Beyond Geometry: Information Topology</h3>
+	    <div class="leftpane">
+	      <ul>
+		<li>Manifold Boundaries forms a hierarchical cell-complex</li>
+		<li>Each boundary cell is a simplified model</li>
+		<li>The boundary complex is a topological property, not a geometric property</li>
+		<li>Model manifolds are realizations of abstract polytopes</li>
+		<li>Adjacency relationships induce a partial order</li>
+	      </ul>
+	    </div>
+	    <div class="esrmanifold">
+	      <img src="media/esrmanifold.png" alt="" />
+	    </div>
+	    <div class="esrhasse">
+	      <img src="media/esrhasse.png" alt="" />
+	    </div>
+	    <div class="footerpane">
+	      <p>
+		Transtrum, Mark K., Gus Hart, and Peng Qiu. "Information topology identifies emergent model classes." arXiv preprint arXiv:1409.6203 (2014).
+	      </p>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h4 class="slidetitle">Example: Enzyme Reaction</h4>
+	    <div class="leftpane">
+	      <p style="font-size:0.65em">
+		\( E + S \leftrightharpoons C \rightarrow E + P \)
+		<br /><br />
+		3 Parameters \( k_f, k_r, k_c\)
+		\begin{align}
+		\frac{d}{dt} [E]  & = -k_f [E][S] + k_r [C] + k_c [C] \\
+		\frac{d}{dt} [S]  & = -k_f [E][S] + k_r [C] \\
+		\frac{d}{dt} [C]  & = k_f [E][S] - k_r [C] - k_c [C] \\
+		\frac{d}{dt} [P]  & = k_c [C] \\
+		\end{align}
+	      </p>
+	    </div>
+	    <div class="esrcgmanifold">
+	      <img src="media/esrcgmanifold.png" alt="" />
+	    </div>
+	    <div class="esrcghasse">
+	      <img src="media/esrcghasse.png" alt="" />
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Hasse Diagrams and Approximate Models</h3>
+	    <div class="leftpane">
+	      <ul>
+		<br />
+		<li>Each boundary cell captures a different idealized behavior of the system.</li>
+		<li>Depending on the context, these idealized behaviors could represent:</li>
+		<ul>
+		  <li>"Healthy" vs. "Sick"</li>
+		  <li>Phases of matter</li>
+		  <li>Fast/Slow Dynamics</li>
+		  <li>Developmental Stages?</li>
+		</ul>
+
+	      </ul>
+	    </div>
+	    <div class="hassebottom">
+	      <p>
+		The Hasse diagram is a road map from the intricate, fully-parameterized description through various types of approximations to distinct behavioral regimes.
+	      </p>
+	    </div>
+
+	    <div class="hassehierarchy">
+	      <img src="media/hierarchy.png" alt="" />
+	    </div>
+	  </section>
+	  
+	</section>
+
+	<section>
+
+	  <section>
+	    <h1 class="sectiontitle">Some Final Thoughts</h1>
+	  </section>
+	  <section>
+	    <h3 class="slidetitle">Speculation</h3>
+	    <div class="mainpane">
+	      <p>
+		A theory of how a low effective dimensionality emerges in complex systems can explain a variety of observations
+	      </p>
+	      <ul>
+		<li>Efficacy of PCA</li>
+		<ul>
+		  <li>Big Data is Reducible</li>
+		  <li>Deep Learning</li>
+		</ul>
+		<li>Efficacy of Levenberg-Marquardt</li>
+		<li>Evolution is enabled</li>
+		<li>Pattern Recognition (e.g., cartoons and caricatures)</li>
+		<li>Different models can describe the same phenomenon</li>
+		<li>Science is possible</li>
+		<li>The world is comprehensible</li>
+	      </ul>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Summary and Conclusions</h3>
+	    <div class="mainpane">
+	      <ul>
+		<li>Parameter Reduction & Effective Theories</li>
+		<ul>
+		  <li>Two Cultures of Mathematical Modeling</li>
+		  <li>Fisher Information reflects low-effective dimensionality</li>
+		  <li>Physically insightful models often emerge because of a "small parameter"</li>
+		</ul>
+		<li>Information Geometry</li>
+		<ul>
+		  <li>Models are equivalent to manifolds</li>
+		  <li>Hierarchy of widths</li>
+		  <li>Complex Models have low effective dimensionality</li>
+		  <li>Parameter Reduction = Manifold Hyper-corners (MBAM)</li>
+		</ul>
+		<li>Systematically derive new, effective theories from first principles</li>
+		<ul>
+		  <li>Information Topology: A meta theory for organizing our information about the world</li>		  
+		</ul>
+	      </ul>
+	      <p>
+By characterizing the geometric and
+topological structures underlying scientific models, we can
+connect bottom-up descriptions of complex processes with top-down
+inferences drawn from data, paving the way for emergent theories in
+physics, biology, and beyond.
+	      </p>
+	    </div>
+	  </section>
+
+	  <section>
+	    <h3 class="slidetitle">Acknowledgements</h3>
+	    <div class="leftpane">
+	      <h4 style="text-align:left">Collaborators</h4>
+	      <ul>
+		<li>James Sethna (Cornell)</li>
+		<li>Peng Qiu (Georgia Tech)</li>
+		<li>Chris Myers (Cornell)</li>
+		<li>Kevin Brown (Connecticut)</li>
+		<li>Ben Machta (Princeton, Yale)</li>
+		<li>Bryan Daniels (Arizona State)</li>
+	      </ul>
+	    </div>
+	    <div class="rightpane">
+	      <h4 style="text-align:left">Funding Sources</h4>
+	    </div>
+	    <div class="nsf">
+	      <img src="media/nsf_logo.png" alt="" />
+	    </div>
+	    <div class="army">
+	      <img src="media/army_logo.jpg" alt="" />
+	    </div>
+	    <div class="cbb">
+	      <img src="media/CBBlogo.png" alt="" />
+	    </div>
+	  </section>
+	</section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+      center: true,
+      history: true,
+      dependencies: [
+      { src: 'plugin/markdown/marked.js' },
+      { src: 'plugin/markdown/markdown.js' },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      // MathJax
+      { src: 'plugin/math/math.js', async: true }
+      
+      ]
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,710 @@
+/*********************************************
+ * Customizations
+ *********************************************/
+
+/* Override theme font sizes */
+
+.reveal h1 {
+  font-size: 1.9em; }
+
+.reveal h2 {
+  font-size: 1.6em; }
+
+.reveal h3 {
+  font-size: 1.25em; }
+
+.reveal h4 {
+    font-size: 0.8em; }
+
+
+
+/* allows absolute positioning */
+/* Taken from here: https://github.com/hakimel/reveal.js/issues/180#issuecomment-173543708 */
+.reveal .slides > section.present, .reveal .slides > section > section.present {
+  min-height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  position: absolute !important;
+  top: 0 !important;
+  align-items: center !important;
+}
+
+.print-pdf .reveal .slides > section.present, .print-pdf .reveal .slides > section > section.present {
+  min-height: 700px !important; /* Changed height--770px caused blank pages.  This is the max value that does not insert blank pages.*/
+  position: relative !important;
+}
+
+/* General slide elements */
+
+.sectiontitle{
+    position: absolute;
+    top: 300px;
+    left: 0;
+    width: 100%;
+    text-align: left;
+}
+
+.slidetitle{
+    font-size:1em;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    text-align: left;
+}
+
+.mainpane{
+    position:absolute;
+    top: 110px;
+    left: 0;
+    width: 100%;
+    height: 615px;
+}
+
+.mainpane p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+.mainpane ul{
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+.mainpane ol{
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+.singlepane{
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.singlepane p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+.singlepane ul{
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+.singlepane ol{
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+.leftpane{
+    position:absolute;
+    top: 110px;
+    left: 0;
+    width: 50%;
+    height: 615px;
+}
+
+.leftpane p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+.leftpane ul{
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+.leftpane ol{
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+.rightpane{
+    position:absolute;
+    top: 110px;
+    left: 50%;
+    width: 50%;
+    height: 615px;
+}
+
+.rightpane p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+.rightpane ul{
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+.rightpane ol{
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+.footerpane {
+    position: absolute;
+    top: 600px;
+    left: 0px;
+    width: 100%;
+}
+
+.footerpane p{
+    text-align: left;
+    font-size: 0.5em;
+    width:100%;
+}
+
+/* Specific Slides */
+
+.title {
+    text-align: left;
+    position: absolute;
+    left: 0;
+    top: 0px;
+}
+
+.name{
+    text-align: left;
+    position: absolute;
+    left: 0%;
+    width: 50%;
+    top: 475px;
+}
+
+.venue{
+    text-align: left;
+    position: absolute;
+    left: 0%;
+    width: 55%;
+    top: 525px;
+}
+
+.date {
+    text-align: left;    
+    position: absolute;
+    left: 0%;
+    width: 50%;
+    top: 625px;
+}
+
+.byulogo {
+    position: absolute;
+    top: 0px;
+    left: 85%;
+    width: 15%;
+}
+
+.titlenlls {
+    position: absolute;
+    top: 0px;
+    left: 70%;
+    width: 30%;
+}
+
+.titlemodelmanifold {
+    position: absolute;
+    top: 240px;
+    left: 0%;
+    width: 40%;
+}
+
+.titlehierarchy {
+    position: absolute;
+    top: 250px;
+    left: 60%;
+    width: 40%;
+}
+
+.hierarchy {
+    position: absolute;
+    top: 150px;
+    left: 55%;
+    width: 45%;
+}
+
+.nllsdata {
+    position: absolute;
+    top: 100px;
+    left: 0%;
+    width: 45%;
+}
+
+.nllsmath {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    width: 45%;
+
+}
+
+.nllsmath p {
+    font-size: 0.75em;
+}
+
+.costsurfaceimg {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    width: 45%;
+}
+
+.costsurfaceleft {
+    position:absolute;
+    top: 110px;
+    left: 0;
+    width: 50%;
+    height: 615px;
+}
+
+.costsurfaceleft p{
+    font-size:1.0em;
+    text-align: left;
+    width: 100%;
+}
+    
+.costsurfacebottom {
+    position:absolute;
+    top: 325px;
+    left: 0;
+    width: 100%;
+    height: 615px;
+}
+
+.costsurfacebottom ul{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+    
+.costsurfacebottom p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+    
+.costsurfacebottomright {
+    position:absolute;
+    top: 375px;
+    left: 75%;
+    width: 25%;
+    height: 615px;
+}
+
+.costsurfacebottomright p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+.diffusionlattice {
+    position: absolute;
+    top: 350px;
+    left: 25%;
+    width: 50%;
+}
+
+.diffusioneigs {
+    position: absolute;
+    top: 100px;
+    left: 0%;
+    width: 45%;
+}
+
+.isingeigs {
+    position: absolute;
+    top: 100px;
+    left: 0%;
+    width: 45%;
+}
+
+.vanderpoltext {
+    position: absolute;
+    top: 400px;
+    left: 50%;
+    width: 45%;
+}
+
+.vanderpoltext p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+.vanderpolimg {
+    position: absolute;
+    top: 350px;
+    left: 0%;
+    width: 45%;
+}
+
+.egfrnetwork {
+    position: absolute;
+    top: 75px;
+    left: 0px;
+    width: 40%;
+}
+
+.egfreigs {
+    position: absolute;
+    top: 175px;
+    left: 76%;
+    width: 17%;
+}
+
+.egfrequations {
+    position: absolute;
+    top: 75px;
+    left: 40%;
+    width: 36%;
+}
+
+.egfrtext {
+    position: absolute;
+    top: 75px;
+    left: 76%;
+    width: 25%;
+}
+
+.egfrtext p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+.egfrtextbottom {
+    position: absolute;
+    top: 550px;
+    left: 0;
+    width: 100%;
+}
+
+.egfrtextbottom p{
+    font-size:0.75em;
+    text-align: center;
+    width: 100%;
+}
+
+.alleigsdiffusion {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 35%;
+}
+
+.alleigsising {
+    position: absolute;
+    top: 0px;
+    left: 35%;
+    width: 35%
+}
+
+.alleigsvanderpol {
+    position: absolute;
+    top: 350px;
+    left: 10%;
+    width: 50%;
+}
+
+.alleigsegfr {
+    position: absolute;
+    top: 0px;
+    left: 75%;
+    width: 25%;
+}
+
+.sloppyeigs {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 50%;
+}
+
+.modelmanifoldupperleft {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 50%;
+}
+
+.modelmanifoldupperleft ul{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+
+.modelmanifolddata {
+    position: absolute;
+    top: 0px;
+    left: 60%;
+    width: 35%;
+}
+
+.modelmanifoldequation {
+    position: absolute;
+    top: 250px;
+    left: 60%;
+    width: 40%;
+}
+
+.modelmanifoldequation p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+
+.modelmanifold {
+    position: absolute;
+    top: 325px;
+    left: 50%;
+    width: 45%;
+}
+
+.twoexpeq {
+    position: absolute;
+    top: 0px;
+    left: 65%;
+    width: 35%;
+}
+
+.twoexpeq p{
+    font-size:0.75em;
+    text-align: right;
+    width: 100%;
+}
+
+.twoexpdata {
+    position: absolute;
+    top: 100px;
+    left: 0%;
+    width: 40%;
+}
+
+.twoexpmanifold {
+    position: absolute;
+    top: 200px;
+    left: 40%;
+    width: 60%;
+}
+
+.threeexpeq {
+    position: absolute;
+    top: 0px;
+    left: 60%;
+    width: 40%;
+}
+
+.threeexpeq p{
+    font-size:0.75em;
+    text-align: right;
+    width: 100%;
+}
+
+.threeexpmanifold {
+    position: absolute;
+    top: 150px;
+    left: 10%;
+    width: 80%;
+}
+
+.ecreq {
+    position: absolute;
+    top: 50px;
+    left: 0%;
+    width: 100%;
+}
+
+.ecreq p{
+    font-size:0.75em;
+    text-align: right;
+    width: 100%;
+}
+
+.ecrmanifold {
+    position: absolute;
+    top: 200px;
+    left: 10%;
+    width: 80%;
+}
+
+.chqeq {
+    position: absolute;
+    top: 0px;
+    left: 0%;
+    width: 100%;
+}
+
+.chqeq p{
+    font-size:0.75em;
+    text-align: right;
+    width: 100%;
+}
+
+.chqmanifold {
+    position: absolute;
+    top: 200px;
+    left: 10%;
+    width: 80%;
+}
+
+.iadeq {
+    position: absolute;
+    top: 100px;
+    left: 60%;
+    width: 40%;
+}
+
+.iadeq p{
+    font-size:0.75em;
+    text-align: left;
+    width: 100%;
+}
+
+.iadmanifold {
+    position: absolute;
+    top: 100px;
+    left: 0%;
+    width: 60%;
+}
+
+.isingeq {
+    position: absolute;
+    top: 0px;
+    left: 0%;
+    width: 100%;
+}
+
+.isingeq p{
+    font-size:0.75em;
+    text-align: right;
+    width: 100%;
+}
+
+.isingmanifold {
+    position: absolute;
+    top: 100px;
+    left: 0%;
+    width: 60%;
+}
+
+
+.manifoldwidths {
+    position: absolute;
+    top: 0px;
+    left: 55%;
+    width: 45%;
+}
+
+.interpolation {
+    position: absolute;
+    top: 260px;
+    left: 55%;
+    width: 45%;
+}
+
+.diffusionmanifold {
+    position: absolute;
+    top: 350px;
+    left: 0%;
+    width: 100%;
+}
+
+.mbam {
+    position: absolute;
+    top: 50px;
+    left: 60%;
+    width: 40%;
+}
+
+.mbamvelocity {
+    position: absolute;
+    top: 250px;
+    left: 60%;
+    width: 40%;
+}
+
+.esrmanifold {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    width: 50%;
+}
+
+.esrhasse {
+    position: absolute;
+    top: 260px;
+    left: 60%;
+    width: 40%;
+}
+
+.esrcgmanifold {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    width: 50%;
+}
+
+.esrcghasse {
+    position: absolute;
+    top: 325px;
+    left: 50%;
+    width: 50%;
+}
+
+.hassehierarchy {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    width: 45%;
+}
+
+.hassebottom {
+    position: absolute;
+    top: 510px;
+    left: 0%;
+    width: 100%;
+
+}
+
+.hassebottom p{
+    font-size: 0.75em;
+    text-aling: center;
+}
+.nsf {
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    width: 20%;
+}
+
+.army {
+    position: absolute;
+    top: 190px;
+    left: 75%;
+    width: 20%;
+}
+
+.cbb {
+    position: absolute;
+    top: 450px;
+    left: 50%;
+    width: 50%;
+}
